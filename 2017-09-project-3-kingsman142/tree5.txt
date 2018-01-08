@@ -1,0 +1,3 @@
+day_of_week fri: bad (1)
+day_of_week mon: good (3)
+day_of_week wed: bad (2)

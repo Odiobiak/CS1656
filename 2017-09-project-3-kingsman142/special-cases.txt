@@ -1,0 +1,81 @@
+===== Pre-emptively categorize data with more levels underneath (tree4.txt) =====
+Take this tree for example:
+
+day_of_week fri: bad (1)
+day_of_week mon
+|   color black: bad (5)
+|   color blue: good (3)
+|   |   fruit blueberries: good (2)
+|   |   fruit grapes: bad (2)
+|   color green
+|   |   fruit blueberries: bad (1)
+|   |   fruit grapes: good (3)
+|   color red: good (2)
+day_of_week sat: good (1)
+day_of_week sun: good (3)
+day_of_week thu
+|   fruit blueberries: bad (1)
+|   fruit grapes: good (1)
+day_of_week tue: bad (2)
+day_of_week wed: bad (2)
+
+You'll notice the line "color blue: good (3)" and then two classifications underneath it for both "fruit blueberries" and "fruit grapes".  This is a special case and a bit odd since it classifies all blue objects into the good category, but still continues onto splitting them into fruits.
+I chose to work around this special case by skipping that above initial classification at "color blue" and instead tell the data to continue further down the tree as far as possible.  This is the correct decision because we want the most precise data as possible.  Obviously, if we can classify at color, that's fine, but if we also go one step further and classify by fruit, which is more specific, we can correctly identify if it's "good" or "bad".
+As such, if you pass this example in to the program for training, the output for "color blue" will be "color blue: good (0)" because every test dataset also classified by fruit.
+
+===== One-level tree (tree5.txt) =====
+This is an obvious one.  Take the following example:
+
+day_of_week fri: bad (1)
+day_of_week mon: good (3)
+day_of_week wed: bad (2)
+
+This should return a ton of UNMATCHED results for our test data.  We only class by day_of_week and only on three of those days.  This is a rather trivial scenario but it had to be brought up.
+
+===== Empty tree (tree6.txt) =====
+This is another obvious one.  If there is no tree, or it's empty, you should return that all items are UNMATCHED.  On the empty tree with our test.csv file, it should just return:
+
+UNMATCHED: 27
+
+===== More than two classes (tree7.txt) =====
+There are two classes given in the examples to us.  What if there are more than two classes?  Let's test it with this input:
+
+day_of_week fri: bad (1)
+day_of_week mon
+|   color black: bad (5)
+|   color blue: good (3)
+|   |   fruit blueberries: good (2)
+|   |   fruit grapes: horrendous (3)
+|   color green
+|   |   fruit blueberries: bad (1)
+|   |   fruit grapes: good (3)
+|   color red: good (2)
+day_of_week sat: good (1)
+day_of_week sun: horrendous (7)
+day_of_week thu
+|   fruit blueberries: bad (1)
+|   fruit grapes: good (1)
+day_of_week tue: bad (2)
+day_of_week wed: bad (2)
+
+Our following output is:
+
+day_of_week fri: bad (1)
+day_of_week mon
+|   color black: bad (5)
+|   color blue: good (0)
+|   |   fruit blueberries: good (2)
+|   |   fruit grapes: horrendous (2)
+|   color green
+|   |   fruit blueberries: bad (1)
+|   |   fruit grapes: good (3)
+|   color red: good (2)
+day_of_week sat: good (1)
+day_of_week sun: horrendous (4)
+day_of_week thu
+|   fruit blueberries: bad (1)
+|   fruit grapes: good (1)
+day_of_week tue: bad (2)
+day_of_week wed: bad (2)
+
+This is the exact same output as if you switched "horrendous" and "bad".  This makes sense as well.  The only difference is the name of the classification, which doesn't really affect anything.

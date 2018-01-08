@@ -1,0 +1,17 @@
+day_of_week fri: bad (1) 
+day_of_week mon
+|   color black: bad (5)
+|   color blue
+|   |   fruit blueberries: good (2)
+|   |   fruit grapes: bad (2)
+|   color green
+|   |   fruit blueberries: bad (1)
+|   |   fruit grapes: good (3)
+|   color red: good (2)
+day_of_week sat: good (1)
+day_of_week sun: good (3)
+day_of_week thu
+|   fruit blueberries: bad (1)
+|   fruit grapes: good (1)
+day_of_week tue: bad (2)
+day_of_week wed: bad (2)
